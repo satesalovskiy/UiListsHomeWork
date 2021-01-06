@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">UiListsHomeWork</string>
+    <string name="preview">preview</string>
+    <string name="films">Films</string>
+    <string name="games">Games</string>
+
+    <string-array name="games_list">
+        <item>Monster Hunter World</item>
+        <item>Death Stranding</item>
+        <item>Doom: Eternal</item>
+        <item>Half-Life: Alyx</item>
+        <item>Horizon Zero Dawn</item>
+        <item>Minecraft</item>
+        <item>Sid Meier\'s Civilization VI</item>
+        <item>League of Legends</item>
+    </string-array>
+
+    <string-array name="games_with_preview_list">
+        <item>The Witcher 3: Wild Hunt</item>
+        <item>Sekiro: Shadows Die Twice</item>
+        <item>Red Dead Redemption 2</item>
+    </string-array>
+
+    <string-array name="films_list">
+        <item>The Invisible Man</item>
+        <item>Birds of Prey</item>
+        <item>Richard Jewell</item>
+        <item>Another Round</item>
+        <item>Tenet</item>
+    </string-array>
 </resources>
