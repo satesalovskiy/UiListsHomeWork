@@ -3,6 +3,7 @@
     <string name="preview">preview</string>
     <string name="films">Films</string>
     <string name="games">Games</string>
+    <string name="remove">Remove</string>
 
     <string-array name="games_list">
         <item>Monster Hunter World</item>

@@ -12,7 +12,7 @@ class GamesViewHolder(private val binding: ItemsGameBinding) : BaseViewHolder(
         ItemsGameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
-    override fun bind(item: Item) {
+    override fun bind(item: Item, removeCallback: ((item: Item) -> (Unit))?) {
         item as Item.Game
         binding.gameName.text = item.text
     }

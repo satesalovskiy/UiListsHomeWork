@@ -12,7 +12,7 @@ class GamesWithPreviewViewHolder(private val binding: ItemsGameWithPreviewBindin
         ItemsGameWithPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
-    override fun bind(item: Item) {
+    override fun bind(item: Item, removeCallback: ((item: Item) -> (Unit))?) {
         item as Item.GameWithPreview
         binding.gameName.text = item.text
         binding.gamePreview.background = item.image
