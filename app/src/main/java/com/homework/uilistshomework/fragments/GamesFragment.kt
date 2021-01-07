@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.homework.uilistshomework.DataUtils
 import com.homework.uilistshomework.Item
@@ -16,6 +17,22 @@ class GamesFragment : Fragment() {
     private val binding: FragmentGamesBinding by lazy {
         val tmpBinding = FragmentGamesBinding.inflate(layoutInflater)
         tmpBinding
+    }
+
+    private val gamesLiveData: MutableLiveData<List<Item>> = MutableLiveData()
+
+    @ExperimentalStdlibApi
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val firstList = DataUtils.getThirdTypeData(requireContext())
+        val secondList = DataUtils.getSecondTypeData(requireContext())
+        val resultList: MutableList<Item> = mutableListOf()
+        resultList.addAll(secondList)
+        resultList.addAll(firstList)
+        resultList.shuffle()
+
+        gamesLiveData.value = resultList
     }
 
     override fun onCreateView(
@@ -30,14 +47,9 @@ class GamesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.adapter = MainRecyclerAdapter().apply {
-            val firstList = DataUtils.getThirdTypeData(requireContext())
-            val secondList = DataUtils.getSecondTypeData(requireContext())
-            val resultList: MutableList<Item> = mutableListOf()
-            resultList.addAll(secondList)
-            resultList.addAll(firstList)
-            resultList.shuffle()
-
-            list = resultList
+            gamesLiveData.observe(viewLifecycleOwner){
+                submitList(it)
+            }
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)

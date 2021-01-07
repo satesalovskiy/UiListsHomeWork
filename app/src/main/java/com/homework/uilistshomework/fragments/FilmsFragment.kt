@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.homework.uilistshomework.DataUtils
 import com.homework.uilistshomework.Item
@@ -16,6 +17,15 @@ class FilmsFragment : Fragment() {
     private val binding: FragmentFilmsBinding by lazy {
         val tmpBinding = FragmentFilmsBinding.inflate(layoutInflater)
         tmpBinding
+    }
+
+    private val filmsLiveData: MutableLiveData<List<Item.Film>> = MutableLiveData()
+
+    @ExperimentalStdlibApi
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        filmsLiveData.value = DataUtils.getFirstTypeData(requireContext())
     }
 
     override fun onCreateView(
@@ -30,12 +40,10 @@ class FilmsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.adapter = MainRecyclerAdapter().apply {
-            list = mutableListOf<Item>().apply {
-                addAll(DataUtils.getFirstTypeData(requireContext()))
-                addAll(DataUtils.getFirstTypeData(requireContext()))
+            filmsLiveData.observe(viewLifecycleOwner){
+                submitList(it)
             }
         }
-
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
     }
 }
