@@ -12,9 +12,12 @@ class FilmsViewHolder(private val binding: ItemsFilmBinding) :
         ItemsFilmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
-    override fun bind(item: Item) {
+    override fun bind(item: Item, removeCallback: ((item: Item) -> (Unit))?) {
         item as Item.Film
         binding.filmName.text = item.text
         binding.filmPreview.background = item.image
+        binding.remove.setOnClickListener {
+            removeCallback?.invoke(item)
+        }
     }
 }

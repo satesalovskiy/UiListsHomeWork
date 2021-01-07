@@ -24,15 +24,18 @@ class GamesFragment : Fragment() {
     @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        gamesLiveData.value = getData()
+    }
 
-        val firstList = DataUtils.getThirdTypeData(requireContext())
-        val secondList = DataUtils.getSecondTypeData(requireContext())
+    @ExperimentalStdlibApi
+    private fun getData(): MutableList<Item> {
         val resultList: MutableList<Item> = mutableListOf()
-        resultList.addAll(secondList)
-        resultList.addAll(firstList)
-        resultList.shuffle()
-
-        gamesLiveData.value = resultList
+        resultList.apply {
+            addAll(DataUtils.getSecondTypeData(requireContext()))
+            addAll(DataUtils.getThirdTypeData(requireContext()))
+            shuffle()
+        }
+        return resultList
     }
 
     override fun onCreateView(
@@ -46,8 +49,8 @@ class GamesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.adapter = MainRecyclerAdapter().apply {
-            gamesLiveData.observe(viewLifecycleOwner){
+        binding.recyclerView.adapter = MainRecyclerAdapter(null).apply {
+            gamesLiveData.observe(viewLifecycleOwner) {
                 submitList(it)
             }
         }
